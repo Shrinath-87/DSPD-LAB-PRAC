@@ -1,0 +1,105 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *left, *right;
+};
+
+struct node *createNode(int value) {
+    struct node *newnode;
+    newnode = (struct node *)malloc(sizeof(struct node));
+    newnode->data = value;
+    newnode->left = newnode->right = NULL;
+    return newnode;
+}
+
+struct node *insert(struct node *root, int value) {
+    if (root == NULL)
+        return createNode(value);
+    if (value < root->data)
+        root->left = insert(root->left, value);
+    else
+        root->right = insert(root->right, value);
+    return root;
+}
+
+void search(struct node *root, int key) {
+    if (root == NULL) {
+        printf("NULL\n");
+        return;
+    }
+    if (root->data == key) {
+        printf("Found!\n");
+    }
+    else if (key < root->data) {
+        search(root->left, key);
+    }
+    else {
+        search(root->right, key);
+    }
+}
+
+struct node *deleteleaf(struct node *root, int key) {
+    if (root == NULL) {
+        printf("NULL\n");
+        return root;
+    }
+    if (key < root->data) {
+        root->left = deleteleaf(root->left, key);
+    }
+    else if (key > root->data) {
+        root->right = deleteleaf(root->right, key);
+    }
+    else {
+        if (root->left == NULL && root->right == NULL) {
+            printf("Deleting leaf node: %d\n", root->data);
+            free(root);
+            return NULL;
+        }
+        else {
+            printf("Not a leaf node, cannot delete!\n");
+        }
+    }
+    return root;
+}
+
+int main() {
+    struct node *root;
+    root = NULL;
+    int ch, value;
+    while (1) {
+        printf("\n1. Search an element\n2. Insert an element\n3. Delete an leaf node\n4. Exit\n");
+        printf("\nEnter choice: ");
+        scanf("%d", &ch);
+        switch (ch) {
+            case 1:
+                printf("Enter element: ");
+                scanf("%d", &value);
+                search(root, value);
+                break;
+
+            case 2:
+                printf("Enter element to insert: ");
+                scanf("%d", &value);
+                root = insert(root, value);
+                printf("Inserted successfully!\n");
+                break;
+
+            case 3:
+                printf("Enter leaf element to delete: ");
+                scanf("%d", &value);
+                root = deleteleaf(root, value);
+                break;
+
+            case 4:
+                printf("Exiting...\n");
+                exit(0);
+
+            default:
+                printf("Invalid input!\n");
+                break;
+        }
+    }
+    return 0;
+}
