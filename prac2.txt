@@ -1,0 +1,116 @@
+#include <stdio.h>
+
+#define max 10
+int stack[max];
+int top = -1;
+
+void pop();
+void push();
+void pali();
+void display();
+
+void main()
+{
+    int ch;
+    do
+    {
+        printf("\n Enter 1: For push");
+        printf("\n Enter 2: For pop");
+        printf("\n Enter 3: For palindrome");
+        printf("\n Enter 4: For display");
+        printf("\n Enter 0: For exit\n");
+
+        printf("\n Enter the choice: ");
+        scanf("%d", &ch);
+
+        switch (ch)
+        {
+        case 1:
+            push();
+            break;
+        case 2:
+            pop();
+            break;
+        case 3:
+            pali();
+            break;
+        case 4:
+            display();
+            break;
+        default:
+            printf("Enter the valid Answer\n");
+            break;
+        }
+    } while (ch != 0);
+}
+
+void push()
+{
+    int data;
+    printf("Enter data you want to push: ");
+    scanf("%d", &data);
+
+    if (top == max - 1)
+    {
+        printf("\n Stack is overflow!!");
+    }
+    else
+    {
+        top++;
+        stack[top] = data;
+    }
+}
+
+void pop()
+{
+    if (top == -1)
+    {
+        printf("\n Stack is underflow!!");
+    }
+    else
+    {
+        top--;
+    }
+}
+
+void display()
+{
+    int i;
+    for (i = 0; i <= top; i++)
+    {
+        printf("\n %d", stack[i]);
+    }
+}
+
+void pali()
+{
+    int i = 0, j = top;
+    int count = 0;
+
+    if (top == -1)
+    {
+        printf("\n Stack is underflow!!");
+    }
+    else
+    {
+        while (i < j)
+        {
+            if (stack[i] != stack[j])
+            {
+                count++;
+                break;
+            }
+            i++;
+            j--;
+        }
+
+        if (count == 1)
+        {
+            printf("\n Stack is not a palindrome");
+        }
+        else
+        {
+            printf("\n Stack is palindrome");
+        }
+    }
+}
