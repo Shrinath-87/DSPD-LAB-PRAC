@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <string.h>
+
+struct details
+{
+    char name[100];
+    int year;
+    char branch[100];
+    float Avg_mark;
+};
+
+void main()
+{
+    struct details std[4], temp;
+    int i, j;
+
+    printf("\n Enter the student data\n");
+    for (i = 0; i < 4; i++)
+    {
+        printf("\n Enter name: ");
+        scanf("%s", std[i].name);
+        printf("\n Enter the year: ");
+        scanf("%d", &std[i].year);
+        printf("\n Enter the branch: ");
+        scanf("%s", std[i].branch);
+        printf("\n Enter Avg mark: ");
+        scanf("%f", &std[i].Avg_mark);
+        printf("\n For details student: %d", i + 1);
+    }
+
+    for (i = 0; i < 3; i++)
+    {
+        for (j = i + 1; j < 4; j++)
+        {
+            if (std[j].Avg_mark > std[i].Avg_mark)
+            {
+                temp = std[i];
+                std[i] = std[j];
+                std[j] = temp;
+            }
+        }
+    }
+
+    printf("\n Name\t Year\t Branch\t Avg mark\n");
+    printf("--------------------------------------\n");
+
+    for (i = 0; i < 4; i++)
+    {
+        printf("\n %s\t %d\t %s\t %.2f", std[i].name, std[i].year, std[i].branch, std[i].Avg_mark);
+    }
+
+    printf("\n--------------------------------------\n");
+}
